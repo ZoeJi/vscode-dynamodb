@@ -1,197 +1,197 @@
 {
-    "name": "vscode-dynamodb",
-    "displayName": "AWS DynamoDB",
-    "description": "Create, browse, and update local and cloud-based DynamoDB tables and indexes.",
-    "version": "0.0.1",
-    "publisher": "hariscodes",
-    "preview": true,
-    "keywords": [
-        "AWS",
-        "json",
-        "dynamodb"
+  "name": "vscode-dynamodb",
+  "displayName": "AWS DynamoDB",
+  "description": "Create, browse, and update local and cloud-based DynamoDB tables and indexes.",
+  "version": "0.0.1",
+  "publisher": "zoeqji",
+  "preview": true,
+  "keywords": [
+    "AWS",
+    "json",
+    "dynamodb"
+  ],
+  "engines": {
+    "vscode": "^1.53.0"
+  },
+  "icon": "media/DynamoDB-icon.png",
+  "categories": [
+    "Other",
+    "Snippets"
+  ],
+  "galleryBanner": {
+    "color": "#0091f8",
+    "theme": "dark"
+  },
+  "homepage": "https://github.com/hariscodes/vscode-dynamodb/blob/master/README.md",
+  "bugs": {
+    "url": "https://github.com/hariscodes/vscode-dynamodb/issues"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hariscodes/vscode-dynamodb"
+  },
+  "activationEvents": [
+    "onView:dynamoExplorer",
+    "onCommand:dynamo.changeServer",
+    "onCommand:dynamo.createTableQP",
+    "onCommand:dynamo.deleteTableQP",
+    "onCommand:dynamo.updateTableQP",
+    "onCommand:dynamo.createTableJSON",
+    "onCommand:dynamo.updateTableJSON",
+    "onCommand:dynamo.updateProfile"
+  ],
+  "main": "./out/src/extension",
+  "contributes": {
+    "views": {
+      "explorer": [
+        {
+          "id": "dynamoExplorer",
+          "name": "dynamo",
+          "when": "config.dynamo.showExplorer == true"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "category": "Dynamo",
+        "command": "dynamo.changeServer",
+        "title": "Connect"
+      },
+      {
+        "category": "Dynamo",
+        "command": "dynamo.refreshExplorer",
+        "title": "Refresh",
+        "icon": {
+          "light": "resources/icons/light/refresh.svg",
+          "dark": "resources/icons/dark/refresh.svg"
+        }
+      },
+      {
+        "category": "Dynamo",
+        "command": "dynamo.createTableQP",
+        "title": "Create Table (QuickPick)",
+        "icon": {
+          "light": "resources/icons/light/add.svg",
+          "dark": "resources/icons/dark/add.svg"
+        }
+      },
+      {
+        "category": "Dynamo",
+        "command": "dynamo.deleteTableQP",
+        "title": "Delete Table (QuickPick)"
+      },
+      {
+        "category": "Dynamo",
+        "command": "dynamo.updateTableQP",
+        "title": "Update Table (QuickPick)"
+      },
+      {
+        "category": "Dynamo",
+        "command": "dynamo.createTableJSON",
+        "title": "Create Table (File)"
+      },
+      {
+        "category": "Dynamo",
+        "command": "dynamo.updateTableJSON",
+        "title": "Update Table (File)"
+      },
+      {
+        "category": "Dynamo",
+        "command": "dynamo.updateProfile",
+        "title": "Set AWS Profile"
+      }
     ],
-    "engines": {
-        "vscode": "^1.20.0"
+    "configuration": {
+      "type": "object",
+      "title": "DynamoDB Configuration",
+      "properties": {
+        "dynamo.showExplorer": {
+          "type": "boolean",
+          "default": false,
+          "description": "Show or Hide the dynamo explorer (NOT IMPLEMENTED)."
+        },
+        "dynamo.sslEnabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable or Disable SSL on requests (NOT IMPLEMENTED)."
+        },
+        "dynamo.region": {
+          "type": "string",
+          "default": "",
+          "description": "AWS region; defaults to region on default AWS CLI profile."
+        },
+        "dynamo.awsProfile": {
+          "type": "string",
+          "default": "default",
+          "description": "The AWS named profile with the credentials that will be used to access resources."
+        }
+      }
     },
-    "icon": "media/DynamoDB-icon.png",
-    "categories": [
-        "Other",
-        "Snippets"
+    "menus": {
+      "view/title": [
+        {
+          "command": "dynamo.refreshExplorer",
+          "when": "view == dynamoExplorer",
+          "group": "navigation"
+        },
+        {
+          "command": "dynamo.changeServer",
+          "when": "view == dynamoExplorer",
+          "group": "navigation"
+        },
+        {
+          "command": "dynamo.createTableJSON",
+          "when": "view == dynamoExplorer",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "dynamo.deleteTableQP",
+          "when": "view == dynamoExplorer && viewItem == dynamoTable"
+        },
+        {
+          "command": "dynamo.updateTableQP",
+          "when": "view == dynamoExplorer && viewItem == dynamoTable"
+        },
+        {
+          "command": "dynamo.updateTableJSON",
+          "when": "view == dynamoExplorer && viewItem == dynamoTable"
+        }
+      ]
+    },
+    "jsonValidation": [
+      {
+        "fileMatch": ".dyc",
+        "url": "https://haris.codes/schemas/createTableSchema.json"
+      },
+      {
+        "fileMatch": ".dyu",
+        "url": "https://haris.codes/schemas/updateTableSchema.json"
+      }
     ],
-    "galleryBanner": {
-        "color": "#0091f8",
-        "theme": "dark"
-    },
-    "homepage": "https://github.com/hariscodes/vscode-dynamodb/blob/master/README.md",
-    "bugs": {
-        "url": "https://github.com/hariscodes/vscode-dynamodb/issues"
-    },
-    "license": "SEE LICENSE IN LICENSE.md",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/hariscodes/vscode-dynamodb"
-    },
-    "activationEvents": [
-        "onView:dynamoExplorer",
-        "onCommand:dynamo.changeServer",
-        "onCommand:dynamo.createTableQP",
-        "onCommand:dynamo.deleteTableQP",
-        "onCommand:dynamo.updateTableQP",
-        "onCommand:dynamo.createTableJSON",
-        "onCommand:dynamo.updateTableJSON",
-        "onCommand:dynamo.updateProfile"
-    ],
-    "main": "./out/src/extension",
-    "contributes": {
-        "views": {
-            "explorer": [
-                {
-                    "id": "dynamoExplorer",
-                    "name": "dynamo",
-                    "when": "config.dynamo.showExplorer == true"
-                }
-            ]
-        },
-        "commands": [
-            {
-                "category": "Dynamo",
-                "command": "dynamo.changeServer",
-                "title": "Connect"
-            },
-            {
-                "category": "Dynamo",
-                "command": "dynamo.refreshExplorer",
-                "title": "Refresh",
-                "icon": {
-                    "light": "resources/icons/light/refresh.svg",
-                    "dark": "resources/icons/dark/refresh.svg"
-                }
-            },
-            {
-                "category": "Dynamo",
-                "command": "dynamo.createTableQP",
-                "title": "Create Table (QuickPick)",
-                "icon": {
-                    "light": "resources/icons/light/add.svg",
-                    "dark": "resources/icons/dark/add.svg"
-                }
-            },
-            {
-                "category": "Dynamo",
-                "command": "dynamo.deleteTableQP",
-                "title": "Delete Table (QuickPick)"
-            },
-            {
-                "category": "Dynamo",
-                "command": "dynamo.updateTableQP",
-                "title": "Update Table (QuickPick)"
-            },
-            {
-                "category": "Dynamo",
-                "command": "dynamo.createTableJSON",
-                "title": "Create Table (File)"
-            },
-            {
-                "category": "Dynamo",
-                "command": "dynamo.updateTableJSON",
-                "title": "Update Table (File)"
-            },
-            {
-                "category": "Dynamo",
-                "command": "dynamo.updateProfile",
-                "title": "Set AWS Profile"
-            }
-        ],
-        "configuration": {
-            "type": "object",
-            "title": "DynamoDB Configuration",
-            "properties": {
-                "dynamo.showExplorer": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "Show or Hide the dynamo explorer (NOT IMPLEMENTED)."
-                },
-                "dynamo.sslEnabled": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "Enable or Disable SSL on requests (NOT IMPLEMENTED)."
-                },
-                "dynamo.region": {
-                    "type": "string",
-                    "default": "",
-                    "description": "AWS region; defaults to region on default AWS CLI profile."
-                },
-                "dynamo.awsProfile": {
-                    "type": "string",
-                    "default": "default",
-                    "description": "The AWS named profile with the credentials that will be used to access resources."
-                }
-            }
-        },
-        "menus": {
-            "view/title": [
-                {
-                    "command": "dynamo.refreshExplorer",
-                    "when": "view == dynamoExplorer",
-                    "group": "navigation"
-                },
-                {
-                    "command": "dynamo.changeServer",
-                    "when": "view == dynamoExplorer",
-                    "group": "navigation"
-                },
-                {
-                    "command": "dynamo.createTableJSON",
-                    "when": "view == dynamoExplorer",
-                    "group": "navigation"
-                }
-            ],
-            "view/item/context": [
-                {
-                    "command": "dynamo.deleteTableQP",
-                    "when": "view == dynamoExplorer && viewItem == dynamoTable"
-                },
-                {
-                    "command": "dynamo.updateTableQP",
-                    "when": "view == dynamoExplorer && viewItem == dynamoTable"
-                },
-                {
-                    "command": "dynamo.updateTableJSON",
-                    "when": "view == dynamoExplorer && viewItem == dynamoTable"
-                }
-            ]
-        },
-        "jsonValidation": [
-            {
-                "fileMatch": ".dyc",
-                "url": "https://haris.codes/schemas/createTableSchema.json"
-            },
-            {
-                "fileMatch": ".dyu",
-                "url": "https://haris.codes/schemas/updateTableSchema.json"
-            }
-        ],
-        "snippets": [
-            {
-                "language": "json",
-                "path": "./snippets/snippets.json"
-            }
-        ]
-    },
-    "scripts": {
-        "vscode:prepublish": "tsc -p ./",
-        "compile": "tsc -watch -p ./",
-        "postinstall": "node ./node_modules/vscode/bin/install",
-        "test": "node ./node_modules/vscode/bin/test"
-    },
-    "devDependencies": {
-        "@types/mocha": "^5.2.5",
-        "@types/node": "^10.12.18",
-        "mocha": "^5.2.0",
-        "typescript": "^3.2.2",
-        "vscode": "^1.1.26"
-    },
-    "dependencies": {
-        "aws-sdk": "^2.384.0"
-    }
+    "snippets": [
+      {
+        "language": "json",
+        "path": "./snippets/snippets.json"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "tsc -p ./",
+    "compile": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^8.2.0",
+    "@types/node": "^10.12.18",
+    "mocha": "^8.2.1",
+    "typescript": "^3.2.2",
+    "vscode": "^1.1.26"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.384.0"
+  }
 }
